@@ -7,12 +7,14 @@ import com.vsu.cgcourse.model.Mesh;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ObjWriter {
 
     private static int lineInd = 0;
 
     public static void write(Mesh model, String fileName) {
+        Locale.setDefault(Locale.ROOT);
         final ArrayList<Vector3f> vertices = model.vertices;
         final ArrayList<Vector2f> textureVertices = model.textureVertices;
         final ArrayList<Vector3f> normals = model.normals;

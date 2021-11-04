@@ -3,6 +3,7 @@ package com.vsu.cgcourse;
 import com.vsu.cgcourse.math.Vector3f;
 import com.vsu.cgcourse.model.Mesh;
 import com.vsu.cgcourse.obj_reader.ObjReader;
+import com.vsu.cgcourse.obj_writer.ObjWriter;
 import com.vsu.cgcourse.render_engine.Camera;
 import com.vsu.cgcourse.render_engine.RenderEngine;
 import javafx.animation.Animation;
@@ -35,7 +36,7 @@ public class GuiController {
     private Mesh mesh = null;
 
     private Camera camera = new Camera(
-            new Vector3f(0, 00, 100),
+            new Vector3f(0, 0, 100),
             new Vector3f(0, 0, 0),
             1.0F, 1, 0.01F, 100);
 
@@ -71,7 +72,7 @@ public class GuiController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
         fileChooser.setTitle("Load Model");
 
-        File file = fileChooser.showOpenDialog((Stage) canvas.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
         if (file == null) {
             return;
         }
@@ -84,6 +85,16 @@ public class GuiController {
             // todo: обработка ошибок
         } catch (IOException exception) {
 
+        }
+    }
+
+    @FXML
+    public void onSaveModelMenuItemClick() {
+        if (mesh != null) {
+            ObjWriter.write(mesh, "MyModel");
+        } else {
+            // todo Exception
+            System.out.println("Еще не загрузили модельку");
         }
     }
 
