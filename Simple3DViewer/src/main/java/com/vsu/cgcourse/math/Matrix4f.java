@@ -6,7 +6,7 @@ public class Matrix4f {
     private final int MATRIX_SIZE = 4;
     private float[][] matrix;
 
-    // todo final
+    // todo final  добавить гаусса и определитель
     public Matrix4f(boolean isZero) {
         float[][] matrix = new float[MATRIX_SIZE][MATRIX_SIZE];
         if (!isZero) {
@@ -35,6 +35,10 @@ public class Matrix4f {
 
     public float getMatrixElem(int i, int j) {
         return this.matrix[i][j];
+    }
+
+    public float[][] getMatrix() {
+        return this.matrix;
     }
 
     public Matrix4f sum(Matrix4f m2) {

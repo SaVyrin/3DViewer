@@ -9,6 +9,13 @@ public class Mesh {
 
     public Mesh() {}
 
+    public float[][] rotateScaleTranslate = new float[][]{
+            {1, 0, 0, 0},
+            {0, 1, 0, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 1}
+    };
+
     public ArrayList<Vector3f> vertices = new ArrayList<>();
     public ArrayList<Vector2f> textureVertices = new ArrayList<>();
     public ArrayList<Vector3f> normals = new ArrayList<>();

@@ -17,9 +17,8 @@ public class RenderEngine {
             final Camera camera,
             final Mesh mesh,
             final int width,
-            final int height)
-    {
-        Matrix4f modelMatrix = rotateScaleTranslate();
+            final int height) {
+        Matrix4f modelMatrix = new Matrix4f(mesh.rotateScaleTranslate);
         Matrix4f viewMatrix = camera.getViewMatrix();
         Matrix4f projectionMatrix = camera.getProjectionMatrix();
 
@@ -34,6 +33,7 @@ public class RenderEngine {
             ArrayList<Point2f> resultPoints = new ArrayList<>();
             for (int vertexInPolygonInd = 0; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
                 Vector3f vertex = mesh.vertices.get(mesh.polygonVertexIndices.get(polygonInd).get(vertexInPolygonInd));
+
                 Point2f resultPoint = vertexToPoint(multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertex), width, height);
                 resultPoints.add(resultPoint);
             }

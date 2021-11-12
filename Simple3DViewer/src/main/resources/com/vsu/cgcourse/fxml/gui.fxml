@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.vsu.cgcourse.GuiController">
+
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vsu.cgcourse.GuiController">
    <children>
        <MenuBar>
           <menus>
@@ -46,16 +50,55 @@
                      </MenuItem>
                      <MenuItem mnemonicParsing="false" onAction="#handleCameraUp" text="Up">
                          <accelerator>
-                             <KeyCodeCombination alt="UP" code="W" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                             <KeyCodeCombination alt="UP" code="UP" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator>
                      </MenuItem>
                      <MenuItem mnemonicParsing="false" onAction="#handleCameraDown" text="Down">
                          <accelerator>
-                             <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                             <KeyCodeCombination alt="UP" code="DOWN" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                          </accelerator>
                      </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#moveViewTargetLeft" text="Move Left">
+                     <accelerator>
+                         <KeyCodeCombination alt="UP" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                 </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#moveViewTargetUp" text="Move Up">
+                     <accelerator>
+                         <KeyCodeCombination alt="UP" code="W" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#moveViewTargetRight" text="Move rRght">
+                     <accelerator>
+                         <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#moveViewTargetDown" text="Move Down">
+                     <accelerator>
+                         <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
                  </items>
               </Menu>
+            <Menu mnemonicParsing="false" text="Mesh Options">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#rotateScaleTranslate" text="Scale X">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="X" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#scaleByYAxes" text="Scale Y">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Y" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#scaleByZAxes" text="Scale Z">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Z" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              </items>
+            </Menu>
           </menus>
        </MenuBar>
    

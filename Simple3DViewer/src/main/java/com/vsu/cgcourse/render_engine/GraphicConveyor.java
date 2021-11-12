@@ -4,17 +4,72 @@ package com.vsu.cgcourse.render_engine;
 import com.vsu.cgcourse.math.Matrix4f;
 import com.vsu.cgcourse.math.Point2f;
 import com.vsu.cgcourse.math.Vector3f;
+import com.vsu.cgcourse.model.Mesh;
 
 public class GraphicConveyor {
 
-    public static Matrix4f rotateScaleTranslate() {
-        float[][] matrix = new float[][]{
-                {1, 0, 0, 0},
-                {0, 1, 0, 0},
+    public static Matrix4f modelMatrix(Vector3f scale, Vector3f rotate, Vector3f translate, Mesh mesh) {
+        Matrix4f rtsMatrix = new Matrix4f(mesh.rotateScaleTranslate);
+        scale(scale, rtsMatrix);
+        rotate(rotate, rtsMatrix);
+        translate(translate, rtsMatrix);
+        return rtsMatrix;
+    }
+
+    public static void scale(Vector3f scale, Matrix4f matrix4f) {
+        float[][] scaleMatrix = new float[][]{
+                {scale.getX(), 0, 0, 0},
+                {0, scale.getY(), 0, 0},
+                {0, 0, scale.getZ(), 0},
+                {0, 0, 0, 1}
+        };
+        Matrix4f scaleMatrix4f = new Matrix4f(scaleMatrix);
+        matrix4f.mul(scaleMatrix4f);
+    }
+
+    public static void rotate(Vector3f rotate, Matrix4f matrix4f) {
+        float sinX = (float) Math.sin(Math.toRadians(rotate.getX()));
+        float cosX = (float) Math.cos(Math.toRadians(rotate.getX()));
+        float sinY = (float) Math.sin(Math.toRadians(rotate.getY()));
+        float cosY = (float) Math.cos(Math.toRadians(rotate.getY()));
+        float sinZ = (float) Math.sin(Math.toRadians(rotate.getZ()));
+        float cosZ = (float) Math.cos(Math.toRadians(rotate.getZ()));
+
+        float[][] rotateZMatrix = new float[][]{
+                {cosZ, -sinZ, 0, 0},
+                {sinZ, cosZ, 0, 0},
                 {0, 0, 1, 0},
                 {0, 0, 0, 1}
         };
-        return new Matrix4f(matrix);
+        float[][] rotateYMatrix = new float[][]{
+                {cosY, 0, sinY, 0},
+                {0, 1, 0, 0},
+                {-sinY, 0, cosY, 0},
+                {0, 0, 0, 1}
+        };
+        float[][] rotateXMatrix = new float[][]{
+                {1, 0, 0, 0},
+                {0, cosX, -sinX, 0},
+                {0, sinX, cosX, 0},
+                {0, 0, 0, 1}
+        };
+        Matrix4f rotateMatrix4f = new Matrix4f(rotateZMatrix);
+        Matrix4f rotateYMatrix4f = new Matrix4f(rotateYMatrix);
+        Matrix4f rotateXMatrix4f = new Matrix4f(rotateXMatrix);
+        rotateMatrix4f.mul(rotateYMatrix4f);
+        rotateMatrix4f.mul(rotateXMatrix4f);
+        matrix4f.mul(rotateMatrix4f);
+    }
+
+    public static void translate(Vector3f translate, Matrix4f matrix4f) {
+        float[][] translateMatrix = new float[][]{
+                {1, 0, 0, translate.getX()},
+                {0, 1, 0, translate.getY()},
+                {0, 0, 1, translate.getZ()},
+                {0, 0, 0, 1}
+        };
+        Matrix4f translateMatrix4f = new Matrix4f(translateMatrix);
+        matrix4f.mul(translateMatrix4f);
     }
 
     public static Matrix4f lookAt(Vector3f eye, Vector3f target) {
@@ -58,6 +113,13 @@ public class GraphicConveyor {
         return result;
     }
 
+    // todo переделал на вектор-столбец
+    /*
+        final float x = (vertex.getX() * matrix.getMatrixElem(0, 0)) + (vertex.getY() * matrix.getMatrixElem(0, 1)) + (vertex.getZ() * matrix.getMatrixElem(0, 2)) + matrix.getMatrixElem(0, 3);
+        final float y = (vertex.getX() * matrix.getMatrixElem(1, 0)) + (vertex.getY() * matrix.getMatrixElem(1, 1)) + (vertex.getZ() * matrix.getMatrixElem(1, 2)) + matrix.getMatrixElem(1, 3);
+        final float z = (vertex.getX() * matrix.getMatrixElem(2, 0)) + (vertex.getY() * matrix.getMatrixElem(2, 1)) + (vertex.getZ() * matrix.getMatrixElem(2, 2)) + matrix.getMatrixElem(2, 3);
+        final float w = (vertex.getX() * matrix.getMatrixElem(3, 0)) + (vertex.getY() * matrix.getMatrixElem(3, 1)) + (vertex.getZ() * matrix.getMatrixElem(3, 2)) + matrix.getMatrixElem(3, 3);
+    */
     public static Vector3f multiplyMatrix4ByVector3(final Matrix4f matrix, final Vector3f vertex) {
         final float x = (vertex.getX() * matrix.getMatrixElem(0, 0)) + (vertex.getY() * matrix.getMatrixElem(1, 0)) + (vertex.getZ() * matrix.getMatrixElem(2, 0)) + matrix.getMatrixElem(3, 0);
         final float y = (vertex.getX() * matrix.getMatrixElem(0, 1)) + (vertex.getY() * matrix.getMatrixElem(1, 1)) + (vertex.getZ() * matrix.getMatrixElem(2, 1)) + matrix.getMatrixElem(3, 1);
