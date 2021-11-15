@@ -34,7 +34,11 @@ public class RenderEngine {
             for (int vertexInPolygonInd = 0; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
                 Vector3f vertex = mesh.vertices.get(mesh.polygonVertexIndices.get(polygonInd).get(vertexInPolygonInd));
 
-                Point2f resultPoint = vertexToPoint(multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertex), width, height);
+                Vector3f vec = GraphicConveyor.multiplyMatrix4ByVector3Copy(modelMatrix, vertex);
+                Vector3f vec2 = GraphicConveyor.multiplyMatrix4ByVector3(viewMatrix, vec);
+                Vector3f vec3 = GraphicConveyor.multiplyMatrix4ByVector3(projectionMatrix, vec2);
+
+                Point2f resultPoint = vertexToPoint(vec3, width, height);
                 resultPoints.add(resultPoint);
             }
 

@@ -34,6 +34,7 @@ public class GuiController {
     final private float TRANSLATION = 0.5F;
     float sc = 1.1f;
     boolean grow = true;
+    int count = 0;
 
     @FXML
     AnchorPane anchorPane;
@@ -102,7 +103,7 @@ public class GuiController {
 
             Matrix4f matrix4f = new Matrix4f(mesh.rotateScaleTranslate);
             for (int i = 0; i < mesh.vertices.size(); i++) {
-                mesh.vertices.set(i,multiplyMatrix4ByVector3(matrix4f,mesh.vertices.get(i)));
+                mesh.vertices.set(i, multiplyMatrix4ByVector3(matrix4f, mesh.vertices.get(i)));
             }
 
             ObjWriter.write(mesh, "MyModel");
@@ -172,10 +173,22 @@ public class GuiController {
 
     @FXML
     public void rotateScaleTranslate(ActionEvent actionEvent) {
-        Vector3f scale = new Vector3f(1,1,1);
-        Vector3f rotate = new Vector3f(1, 1, 1);
-        Vector3f translate = new Vector3f(1, 0, 0);
+        Vector3f scale;
+        Vector3f rotate = new Vector3f(0, 0, 3);
+        Vector3f translate;
+        if (count == 5) {
+            grow = !grow;
+            count=-1;
+        }
+        if (grow) {
+            translate = new Vector3f(3*sc, 3*sc, 3*sc);
+           scale = new Vector3f(sc, sc, sc);
+        } else {
+            translate = new Vector3f(-3*sc, -3*sc, -3*sc);
+            scale = new Vector3f(1/sc, 1/sc, 1/sc);
+        }
         mesh.rotateScaleTranslate = GraphicConveyor.modelMatrix(scale, rotate, translate, mesh).getMatrix();
+        count++;
     }
 
     @FXML
