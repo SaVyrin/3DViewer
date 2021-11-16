@@ -1,7 +1,6 @@
 package com.vsu.cgcourse;
 
 import com.vsu.cgcourse.math.Matrix4f;
-import com.vsu.cgcourse.math.Point2f;
 import com.vsu.cgcourse.math.Vector3f;
 import com.vsu.cgcourse.model.Mesh;
 import com.vsu.cgcourse.obj_reader.ObjReader;
@@ -9,42 +8,51 @@ import com.vsu.cgcourse.obj_writer.ObjWriter;
 import com.vsu.cgcourse.render_engine.Camera;
 import com.vsu.cgcourse.render_engine.GraphicConveyor;
 import com.vsu.cgcourse.render_engine.RenderEngine;
+import com.vsu.cgcourse.render_engine.State;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.CheckBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.vsu.cgcourse.render_engine.GraphicConveyor.multiplyMatrix4ByVector3;
-import static com.vsu.cgcourse.render_engine.GraphicConveyor.vertexToPoint;
+
 
 public class GuiController {
 
-    final private float TRANSLATION = 0.5F;
-    float sc = 1.1f;
-    boolean grow = true;
-    int count = 0;
+    final private float TRANSLATION = 2F;
+    private State currState = State.MOVE;
 
     @FXML
-    AnchorPane anchorPane;
+    private AnchorPane anchorPane;
+
+    @FXML
+    private VBox mesh_list;
 
     @FXML
     private Canvas canvas;
 
-    private Mesh mesh = null;
+    private final List<Mesh> meshList = new ArrayList<>();
+    private final List<Mesh> activeMeshList = new ArrayList<>();
 
-    private Camera camera = new Camera(
+    private final Camera camera = new Camera(
             new Vector3f(0, 0, 100),
             new Vector3f(0, 0, 0),
             1.0F, 1, 0.01F, 100);
@@ -56,6 +64,28 @@ public class GuiController {
         anchorPane.prefWidthProperty().addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
         anchorPane.prefHeightProperty().addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
 
+        anchorPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                try {
+                    Vector3f getVector = keyPressedEvent(keyEvent);
+                    Vector3f zeroVector = new Vector3f(0,0,0);
+                    Vector3f unitVector = new Vector3f(1,1,1);
+                    if (currState == State.SCALE) {
+                        scaleRotateTranslate(getVector, zeroVector, zeroVector);
+                    }
+                    if (currState == State.ROTATE) {
+                        scaleRotateTranslate(unitVector, getVector, zeroVector);
+                    }
+                    if (currState == State.TRANSLATE) {
+                        scaleRotateTranslate(unitVector, zeroVector, getVector);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
 
@@ -66,8 +96,10 @@ public class GuiController {
             canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
             camera.setAspectRatio((float) (width / height));
 
-            if (mesh != null) {
-                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
+            if (!meshList.isEmpty()) {
+                for (Mesh mesh : meshList) {
+                    RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
+                }
             }
         });
 
@@ -90,7 +122,23 @@ public class GuiController {
 
         try {
             String fileContent = Files.readString(fileName);
-            mesh = ObjReader.read(fileContent);
+            meshList.add(ObjReader.read(fileContent, file.getName()));
+
+            CheckBox checkBox = new CheckBox(meshList.size() + ". " + file.getName());
+
+            EventHandler<MouseEvent> checkBoxEventHandler = e -> {
+                String[] name = checkBox.getText().split("\\.");
+                int index = Integer.parseInt(name[0]) - 1;
+
+                if (checkBox.isSelected()) {
+                    activeMeshList.add(meshList.get(index));
+                }
+                if (!checkBox.isSelected()) {
+                    activeMeshList.remove(meshList.get(index));
+                }
+            };
+            checkBox.addEventFilter(MouseEvent.MOUSE_CLICKED, checkBoxEventHandler);
+            mesh_list.getChildren().add(checkBox);
             // todo: обработка ошибок
         } catch (IOException exception) {
 
@@ -99,14 +147,15 @@ public class GuiController {
 
     @FXML
     public void onSaveModelMenuItemClick() {
-        if (mesh != null) {
-
-            Matrix4f matrix4f = new Matrix4f(mesh.rotateScaleTranslate);
-            for (int i = 0; i < mesh.vertices.size(); i++) {
-                mesh.vertices.set(i, multiplyMatrix4ByVector3(matrix4f, mesh.vertices.get(i)));
+        if (!meshList.isEmpty()) {
+            for (Mesh mesh : meshList) {
+                Matrix4f matrix4f = new Matrix4f(mesh.rotateScaleTranslate);
+                for (int i = 0; i < mesh.vertices.size(); i++) {
+                    mesh.vertices.set(i, multiplyMatrix4ByVector3(matrix4f, mesh.vertices.get(i)));
+                }
             }
 
-            ObjWriter.write(mesh, "MyModel");
+            ObjWriter.write(meshList, "MyModel");
         } else {
             // todo Exception
             System.out.println("Еще не загрузили модельку");
@@ -115,89 +164,155 @@ public class GuiController {
 
     @FXML
     public void handleCameraForward(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, 0, -TRANSLATION));
+        if (currState == State.MOVE) {
+            camera.movePosition(new Vector3f(0, 0, -TRANSLATION));
+        }
     }
 
     @FXML
     public void handleCameraBackward(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, 0, TRANSLATION));
+        if (currState == State.MOVE) {
+            camera.movePosition(new Vector3f(0, 0, TRANSLATION));
+        }
     }
 
     @FXML
     public void handleCameraLeft(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(TRANSLATION, 0, 0));
+        if (currState == State.MOVE) {
+            camera.movePosition(new Vector3f(TRANSLATION, 0, 0));
+        }
     }
 
     @FXML
     public void handleCameraRight(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(-TRANSLATION, 0, 0));
+        if (currState == State.MOVE) {
+            camera.movePosition(new Vector3f(-TRANSLATION, 0, 0));
+        }
     }
 
     @FXML
     public void handleCameraUp(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, TRANSLATION, 0));
+        if (currState == State.MOVE) {
+            camera.movePosition(new Vector3f(0, TRANSLATION, 0));
+        }
     }
 
     @FXML
     public void handleCameraDown(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
+        if (currState == State.MOVE) {
+            camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
+        }
     }
 
     @FXML
     public void moveViewTargetLeft(ActionEvent actionEvent) {
-        Vector3f target = camera.getTarget();
-        target.add(new Vector3f(0.2f, 0f, 0f));
-        camera.setTarget(target);
+        if (currState == State.MOVE) {
+            Vector3f target = camera.getTarget();
+            target.add(new Vector3f(0.2f, 0f, 0f));
+            camera.setTarget(target);
+        }
     }
 
     @FXML
     public void moveViewTargetUp(ActionEvent actionEvent) {
-        Vector3f target = camera.getTarget();
-        target.add(new Vector3f(0f, 0.2f, 0f));
-        camera.setTarget(target);
+        if (currState == State.MOVE) {
+            Vector3f target = camera.getTarget();
+            target.add(new Vector3f(0f, 0.2f, 0f));
+            camera.setTarget(target);
+        }
     }
 
     @FXML
     public void moveViewTargetRight(ActionEvent actionEvent) {
-        Vector3f target = camera.getTarget();
-        target.add(new Vector3f(-0.2f, 0f, 0f));
-        camera.setTarget(target);
+        if (currState == State.MOVE) {
+            Vector3f target = camera.getTarget();
+            target.add(new Vector3f(-0.2f, 0f, 0f));
+            camera.setTarget(target);
+        }
     }
 
     @FXML
     public void moveViewTargetDown(ActionEvent actionEvent) {
-        Vector3f target = camera.getTarget();
-        target.add(new Vector3f(0f, -0.2f, 0f));
-        camera.setTarget(target);
+        if (currState == State.MOVE) {
+            Vector3f target = camera.getTarget();
+            target.add(new Vector3f(0f, -0.2f, 0f));
+            camera.setTarget(target);
+        }
     }
 
     @FXML
-    public void rotateScaleTranslate(ActionEvent actionEvent) {
-        Vector3f scale;
-        Vector3f rotate = new Vector3f(0, 0, 3);
-        Vector3f translate;
-        if (count == 5) {
-            grow = !grow;
-            count=-1;
-        }
-        if (grow) {
-            translate = new Vector3f(3*sc, 3*sc, 3*sc);
-           scale = new Vector3f(sc, sc, sc);
+    public void scale(ActionEvent actionEvent) {
+        if (currState != State.SCALE) {
+            currState = State.SCALE;
         } else {
-            translate = new Vector3f(-3*sc, -3*sc, -3*sc);
-            scale = new Vector3f(1/sc, 1/sc, 1/sc);
+            currState = State.MOVE;
         }
-        mesh.rotateScaleTranslate = GraphicConveyor.modelMatrix(scale, rotate, translate, mesh).getMatrix();
-        count++;
     }
 
     @FXML
-    public void scaleByYAxes(ActionEvent actionEvent) {
-        mesh.rotateScaleTranslate[1][1] += 0.05;
+    public void rotate(ActionEvent actionEvent) {
+        if (currState != State.ROTATE) {
+            currState = State.ROTATE;
+        } else {
+            currState = State.MOVE;
+        }
     }
 
     @FXML
-    public void scaleByZAxes(ActionEvent actionEvent) {
-        mesh.rotateScaleTranslate[2][2] += 0.05;
+    public void translate(ActionEvent actionEvent) {
+        if (currState != State.TRANSLATE) {
+            currState = State.TRANSLATE;
+        } else {
+            currState = State.MOVE;
+        }
+    }
+
+    private Vector3f keyPressedEvent(KeyEvent evt) throws IOException {
+        if (evt.getCode() == KeyCode.NUMPAD8) {
+            if (currState != State.SCALE) {
+                return new Vector3f(TRANSLATION, 0, 0);
+            }
+            return new Vector3f(TRANSLATION, 1, 1);
+        }
+        if (evt.getCode() == KeyCode.NUMPAD5) {
+            if (currState != State.SCALE) {
+                return new Vector3f(-TRANSLATION, 0, 0);
+            }
+            return new Vector3f(1/TRANSLATION, 1, 1);
+        }
+        if (evt.getCode() == KeyCode.NUMPAD4) {
+            if (currState != State.SCALE) {
+                return new Vector3f(0, TRANSLATION, 0);
+            }
+            return new Vector3f(1, TRANSLATION, 1);
+        }
+        if (evt.getCode() == KeyCode.NUMPAD6) {
+            if (currState != State.SCALE) {
+                return new Vector3f(0, -TRANSLATION, 0);
+            }
+            return new Vector3f(1, 1/TRANSLATION, 1);
+        }
+        if (evt.getCode() == KeyCode.W) {
+            if (currState != State.SCALE) {
+                return new Vector3f(0, 0, TRANSLATION);
+            }
+            return new Vector3f(1, 1, TRANSLATION);
+        }
+        if (evt.getCode() == KeyCode.S) {
+            if (currState != State.SCALE) {
+                return new Vector3f(0, 0, -TRANSLATION);
+            }
+            return new Vector3f(1, 1, 1/TRANSLATION);
+        }
+        if (currState != State.SCALE) {
+            return new Vector3f(0, 0, 0);
+        }
+        return new Vector3f(1, 1, 1);
+    }
+
+    private void scaleRotateTranslate(Vector3f scale, Vector3f rotate, Vector3f translate) {
+        for (Mesh mesh : activeMeshList) {
+            mesh.rotateScaleTranslate = GraphicConveyor.modelMatrix(scale, rotate, translate, mesh).getMatrix();
+        }
     }
 }

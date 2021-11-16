@@ -82,17 +82,17 @@
               </Menu>
             <Menu mnemonicParsing="false" text="Mesh Options">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#rotateScaleTranslate" text="Scale X">
+                <MenuItem mnemonicParsing="false" onAction="#scale" text="Scale">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="X" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#scaleByYAxes" text="Scale Y">
+                  <MenuItem mnemonicParsing="false" onAction="#rotate" text="rotate">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Y" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#scaleByZAxes" text="Scale Z">
+                  <MenuItem mnemonicParsing="false" onAction="#translate" text="translate">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="Z" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator>
@@ -102,6 +102,7 @@
           </menus>
        </MenuBar>
    
-       <Canvas fx:id="canvas" height="870" layoutX="114.0" layoutY="104.0" width="1600" AnchorPane.topAnchor="104.0" />
+       <Canvas fx:id="canvas" height="870" layoutX="114.0" layoutY="104.0" style="-fx-view-order: 2;" width="1600" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox fx:id="mesh_list" layoutX="1138.0" layoutY="16.0" prefHeight="293.0" prefWidth="448.0" style="-fx-border-style: solid; -fx-border-width: 2; -fx-background-color: white;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

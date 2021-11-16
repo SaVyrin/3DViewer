@@ -7,35 +7,38 @@ import com.vsu.cgcourse.model.Mesh;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class ObjWriter {
 
     private static int lineInd = 0;
 
-    public static void write(Mesh model, String fileName) {
+    public static void write(List<Mesh> meshList, String fileName) {
         Locale.setDefault(Locale.ROOT);
-        final ArrayList<Vector3f> vertices = model.vertices;
-        final ArrayList<Vector2f> textureVertices = model.textureVertices;
-        final ArrayList<Vector3f> normals = model.normals;
-        final ArrayList<ArrayList<Integer>> polygonVertexIndices = model.polygonVertexIndices;
-        final ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = model.polygonTextureVertexIndices;
-        final ArrayList<ArrayList<Integer>> polygonNormalIndices = model.polygonNormalIndices;
 
         try (FileWriter writer = new FileWriter(fileName + ".obj", false)) {
+            for (Mesh mesh : meshList) {
+                final ArrayList<Vector3f> vertices = mesh.vertices;
+                final ArrayList<Vector2f> textureVertices = mesh.textureVertices;
+                final ArrayList<Vector3f> normals = mesh.normals;
+                final ArrayList<ArrayList<Integer>> polygonVertexIndices = mesh.polygonVertexIndices;
+                final ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = mesh.polygonTextureVertexIndices;
+                final ArrayList<ArrayList<Integer>> polygonNormalIndices = mesh.polygonNormalIndices;
 
-            writeV(vertices, writer);
-            writeVt(textureVertices, writer);
-            writeVn(normals, writer);
+                writeV(vertices, writer);
+                writeVt(textureVertices, writer);
+                writeVn(normals, writer);
 
-            writeF(
-                    polygonVertexIndices,
-                    polygonTextureVertexIndices,
-                    polygonNormalIndices,
-                    writer
-            );
+                writeF(
+                        polygonVertexIndices,
+                        polygonTextureVertexIndices,
+                        polygonNormalIndices,
+                        writer
+                );
 
-            writer.flush();
+                writer.flush();
+            }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

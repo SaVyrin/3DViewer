@@ -15,8 +15,9 @@ public class ObjReader {
 	private static final String OBJ_NORMAL_TOKEN = "vn";
 	private static final String OBJ_FACE_TOKEN = "f";
 
-	public static Mesh read(String fileContent) {
+	public static Mesh read(String fileContent, String meshName) {
 		Mesh result = new Mesh();
+		result.name = meshName;
 
 		int lineInd = 0;
 		Scanner scanner = new Scanner(fileContent);

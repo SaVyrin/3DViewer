@@ -6,6 +6,15 @@ import com.vsu.cgcourse.math.Vector3f;
 import java.util.ArrayList;
 
 public class Mesh {
+    public String name;
+
+    public ArrayList<Vector3f> vertices = new ArrayList<>();
+    public ArrayList<Vector2f> textureVertices = new ArrayList<>();
+    public ArrayList<Vector3f> normals = new ArrayList<>();
+
+    public ArrayList<ArrayList<Integer>> polygonVertexIndices = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> polygonNormalIndices = new ArrayList<>();
 
     public Mesh() {}
 
@@ -15,12 +24,4 @@ public class Mesh {
             {0, 0, 1, 0},
             {0, 0, 0, 1}
     };
-
-    public ArrayList<Vector3f> vertices = new ArrayList<>();
-    public ArrayList<Vector2f> textureVertices = new ArrayList<>();
-    public ArrayList<Vector3f> normals = new ArrayList<>();
-
-    public ArrayList<ArrayList<Integer>> polygonVertexIndices = new ArrayList<>();
-    public ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = new ArrayList<>();
-    public ArrayList<ArrayList<Integer>> polygonNormalIndices = new ArrayList<>();
 }
