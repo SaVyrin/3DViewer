@@ -115,12 +115,6 @@ public class GraphicConveyor {
     }
 
     // todo переделал на вектор-столбец
-    /*
-        final float x = (vertex.getX() * matrix.getMatrixElem(0, 0)) + (vertex.getY() * matrix.getMatrixElem(0, 1)) + (vertex.getZ() * matrix.getMatrixElem(0, 2)) + matrix.getMatrixElem(0, 3);
-        final float y = (vertex.getX() * matrix.getMatrixElem(1, 0)) + (vertex.getY() * matrix.getMatrixElem(1, 1)) + (vertex.getZ() * matrix.getMatrixElem(1, 2)) + matrix.getMatrixElem(1, 3);
-        final float z = (vertex.getX() * matrix.getMatrixElem(2, 0)) + (vertex.getY() * matrix.getMatrixElem(2, 1)) + (vertex.getZ() * matrix.getMatrixElem(2, 2)) + matrix.getMatrixElem(2, 3);
-        final float w = (vertex.getX() * matrix.getMatrixElem(3, 0)) + (vertex.getY() * matrix.getMatrixElem(3, 1)) + (vertex.getZ() * matrix.getMatrixElem(3, 2)) + matrix.getMatrixElem(3, 3);
-    */
     public static Vector3f multiplyMatrix4ByVector3(final Matrix4f matrix, final Vector3f vertex) {
         final float x = (vertex.getX() * matrix.getMatrixElem(0, 0)) + (vertex.getY() * matrix.getMatrixElem(1, 0)) + (vertex.getZ() * matrix.getMatrixElem(2, 0)) + matrix.getMatrixElem(3, 0);
         final float y = (vertex.getX() * matrix.getMatrixElem(0, 1)) + (vertex.getY() * matrix.getMatrixElem(1, 1)) + (vertex.getZ() * matrix.getMatrixElem(2, 1)) + matrix.getMatrixElem(3, 1);
@@ -128,6 +122,7 @@ public class GraphicConveyor {
         final float w = (vertex.getX() * matrix.getMatrixElem(0, 3)) + (vertex.getY() * matrix.getMatrixElem(1, 3)) + (vertex.getZ() * matrix.getMatrixElem(2, 3)) + matrix.getMatrixElem(3, 3);
         return new Vector3f(x / w, y / w, z / w);
     }
+
     public static Vector3f multiplyMatrix4ByVector3Copy(final Matrix4f matrix, final Vector3f vertex) {
         final float x = (vertex.getX() * matrix.getMatrixElem(0, 0)) + (vertex.getY() * matrix.getMatrixElem(0, 1)) + (vertex.getZ() * matrix.getMatrixElem(0, 2)) + matrix.getMatrixElem(0, 3);
         final float y = (vertex.getX() * matrix.getMatrixElem(1, 0)) + (vertex.getY() * matrix.getMatrixElem(1, 1)) + (vertex.getZ() * matrix.getMatrixElem(1, 2)) + matrix.getMatrixElem(1, 3);

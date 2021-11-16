@@ -103,6 +103,8 @@
        </MenuBar>
    
        <Canvas fx:id="canvas" height="870" layoutX="114.0" layoutY="104.0" style="-fx-view-order: 2;" width="1600" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <VBox fx:id="mesh_list" layoutX="1138.0" layoutY="16.0" prefHeight="293.0" prefWidth="448.0" style="-fx-border-style: solid; -fx-border-width: 2; -fx-background-color: white;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox fx:id="mesh_list" layoutX="1138.0" layoutY="16.0" prefHeight="293.0" prefWidth="448.0" style="-fx-border-style: solid; -fx-border-width: 1;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Button layoutX="1276.0" layoutY="293.0" mnemonicParsing="false" onAction="#changeToDarkTheme" text="Dark Theme" />
+      <Button layoutX="1376.0" layoutY="293.0" mnemonicParsing="false" onAction="#changeToLightTheme" text="Light Theme" />
    </children>
 </AnchorPane>

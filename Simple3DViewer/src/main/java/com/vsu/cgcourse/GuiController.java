@@ -5,10 +5,7 @@ import com.vsu.cgcourse.math.Vector3f;
 import com.vsu.cgcourse.model.Mesh;
 import com.vsu.cgcourse.obj_reader.ObjReader;
 import com.vsu.cgcourse.obj_writer.ObjWriter;
-import com.vsu.cgcourse.render_engine.Camera;
-import com.vsu.cgcourse.render_engine.GraphicConveyor;
-import com.vsu.cgcourse.render_engine.RenderEngine;
-import com.vsu.cgcourse.render_engine.State;
+import com.vsu.cgcourse.render_engine.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -32,13 +30,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vsu.cgcourse.render_engine.GraphicConveyor.multiplyMatrix4ByVector3;
+import static com.vsu.cgcourse.render_engine.GraphicConveyor.multiplyMatrix4ByVector3Copy;
 
 
 public class GuiController {
 
     final private float TRANSLATION = 2F;
     private State currState = State.MOVE;
+    private CurrentTheme currentTheme = CurrentTheme.LIGHT_THEME;
 
     @FXML
     private AnchorPane anchorPane;
@@ -147,11 +146,11 @@ public class GuiController {
 
     @FXML
     public void onSaveModelMenuItemClick() {
-        if (!meshList.isEmpty()) {
-            for (Mesh mesh : meshList) {
+        if (!activeMeshList.isEmpty()) {
+            for (Mesh mesh : activeMeshList) {
                 Matrix4f matrix4f = new Matrix4f(mesh.rotateScaleTranslate);
                 for (int i = 0; i < mesh.vertices.size(); i++) {
-                    mesh.vertices.set(i, multiplyMatrix4ByVector3(matrix4f, mesh.vertices.get(i)));
+                    mesh.vertices.set(i, multiplyMatrix4ByVector3Copy(matrix4f, mesh.vertices.get(i)));
                 }
             }
 
@@ -313,6 +312,28 @@ public class GuiController {
     private void scaleRotateTranslate(Vector3f scale, Vector3f rotate, Vector3f translate) {
         for (Mesh mesh : activeMeshList) {
             mesh.rotateScaleTranslate = GraphicConveyor.modelMatrix(scale, rotate, translate, mesh).getMatrix();
+        }
+    }
+
+    @FXML
+    public void changeToDarkTheme(ActionEvent actionEvent) {
+        if (currentTheme != CurrentTheme.DARK_THEME){
+            currentTheme = CurrentTheme.DARK_THEME;
+            String css = getClass().getResource("css/dark_theme.css").toExternalForm();
+            anchorPane.getStylesheets().clear();
+            anchorPane.getStylesheets().add(css);
+            canvas.getGraphicsContext2D().setStroke(Color.WHITE);
+        }
+    }
+
+    @FXML
+    public void changeToLightTheme(ActionEvent actionEvent) {
+        if (currentTheme != CurrentTheme.LIGHT_THEME){
+            currentTheme = CurrentTheme.LIGHT_THEME;
+            String css = getClass().getResource("css/light_theme.css").toExternalForm();
+            anchorPane.getStylesheets().clear();
+            anchorPane.getStylesheets().add(css);
+            canvas.getGraphicsContext2D().setStroke(Color.BLACK);
         }
     }
 }
