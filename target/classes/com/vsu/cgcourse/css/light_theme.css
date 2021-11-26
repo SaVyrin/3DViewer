@@ -1,0 +1,21 @@
+#anchorPane {
+    -fx-background-color: #fff;
+}
+
+.check-box {
+    -fx-text-fill: #000;
+}
+
+#currentStateLabel{
+-fx-padding: 0 0 0 10;
+-fx-text-fill: #000;
+}
+
+#errorsLabel{
+-fx-text-fill: red;
+}
+
+#meshCheckBoxes {
+    -fx-background-color: #fff;
+    -fx-border-color: #000;
+}

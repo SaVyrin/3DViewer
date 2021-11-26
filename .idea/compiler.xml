@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="cgcourse" />
+        <module name="KG3DViewer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="cgcourse" target="14" />
+      <module name="KG3DViewer" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>

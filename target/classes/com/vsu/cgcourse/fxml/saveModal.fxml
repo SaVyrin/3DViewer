@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vsu.cgcourse.fxml.controllers.ModalController">
+   <children>
+      <VBox fx:id="meshCheckBoxes" prefHeight="182.0" prefWidth="400.0" />
+      <RadioButton layoutX="11.0" layoutY="204.0" mnemonicParsing="false" selected="true" text="Сохранить изменения">
+         <toggleGroup>
+            <ToggleGroup fx:id="changes" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="201.0" layoutY="204.0" mnemonicParsing="false" text="Сохранить бех изменений" toggleGroup="$changes" />
+      <Button layoutX="155.0" layoutY="271.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Сохранить" />
+      <TextField fx:id="fileName" layoutX="108.0" layoutY="232.0" promptText="Введите название файла" />
+      <Label fx:id="errorsLabel" layoutX="116.0" layoutY="182.0" prefHeight="21.0" prefWidth="172.0" />
+   </children>
+</AnchorPane>

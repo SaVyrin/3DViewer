@@ -1,0 +1,25 @@
+#anchorPane {
+-fx-background-color: #222;
+}
+
+.check-box{
+-fx-text-fill: #fff;
+}
+
+.radio-button{
+-fx-text-fill: #fff;
+}
+
+#currentStateLabel{
+-fx-padding: 0 0 0 10;
+-fx-text-fill: #fff;
+}
+
+#errorsLabel{
+-fx-text-fill: red;
+}
+
+#meshCheckBoxes {
+-fx-background-color: #222;
+-fx-border-color: #fff;
+}
