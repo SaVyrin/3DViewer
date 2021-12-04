@@ -25,7 +25,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,11 +37,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class GuiController {
-
-    final private float TRANSLATION = 2F;
-    private State currState = State.MOVE;
-    private CurrentTheme currentTheme;
-
     @FXML
     private Label currentStateLabel;
     @FXML
@@ -49,6 +46,10 @@ public class GuiController {
     @FXML
     private Canvas canvas;
 
+    final private float TRANSLATION = 2F;
+    private State currState = State.MOVE;
+    private CurrentTheme currentTheme;
+
     private final List<Mesh> meshList = new ArrayList<>();
     private final List<Mesh> activeMeshList = new ArrayList<>();
 
@@ -56,8 +57,6 @@ public class GuiController {
             new Vector3f(0, 0, 100),
             new Vector3f(0, 0, 0),
             1.0F, 1, 0.01F, 100);
-
-    private Timeline timeline;
 
     @FXML
     private void initialize() {
@@ -85,10 +84,10 @@ public class GuiController {
             }
         });
 
-        timeline = new Timeline();
+        Timeline timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
 
-        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
+        KeyFrame frame = new KeyFrame(Duration.millis(34), event -> {
             double width = canvas.getWidth();
             double height = canvas.getHeight();
 
@@ -144,7 +143,6 @@ public class GuiController {
             checkBox.addEventFilter(MouseEvent.MOUSE_CLICKED, checkBoxEventHandler);
             meshCheckBoxes.getChildren().add(checkBox);
     }
-
 
     @FXML
     private void onSaveModelMenuItemClick() throws IOException {

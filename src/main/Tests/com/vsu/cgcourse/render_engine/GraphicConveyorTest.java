@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class GraphicConveyorTest {
-    private static final float EPS = (float) Math.pow(1, -8);
+    private static final float EPS = (float) Math.pow(10, -6);
 
     @Test
     void modelMatrix() {
@@ -120,8 +120,8 @@ class GraphicConveyorTest {
     @Test
     void perspective() {
         float[][] expectedArray = new float[][]{
-                {(float) (1f/ Math.tan(45f)), 0f, 0f, 0f},
-                {0f, (float) (2f/ Math.tan(45f)), 0f, 0f},
+                {(float) (1f / Math.tan(45f)) / 0.5f, 0f, 0f, 0f},
+                {0f, (float) (1f / Math.tan(45f)), 0f, 0f},
                 {0f, 0f, 3f, 1f},
                 {0f, 0f, -20f, 0}
         };

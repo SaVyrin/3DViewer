@@ -9,7 +9,7 @@ class Vector2fTest {
     void add() {
         Vector2f actual = new Vector2f(1f, 2f);
         Vector2f v2 = new Vector2f(3f, 4f);
-        actual.add(v2);
+        actual = actual.add(v2);
 
         Vector2f expected = new Vector2f(4f, 6f);
         Assertions.assertEquals(expected, actual);
@@ -70,5 +70,22 @@ class Vector2fTest {
 
         float expected = 25;
         Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void barycentricCoordinates() {
+        Vector2f v1 = new Vector2f(10, 0);
+        Vector2f v2 = new Vector2f(0, 10);
+        Vector2f v3 = new Vector2f(5, 5);
+
+        float projectionV1 = v1.dot(v3) / v1.dot(v1);
+        float projectionV2 = v2.dot(v3) / v2.dot(v2);
+
+        Vector2f result = v1.multi(projectionV1).add(v2.multi(projectionV2));
+       // result = result.add(new Vector2f(p1.getX(), p1.getY()));
+
+        int resX = (int) result.getX();
+        int resY = (int) result.getY();
+        System.out.println(resX + " " + resY);
     }
 }

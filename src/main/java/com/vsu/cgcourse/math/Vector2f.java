@@ -24,9 +24,11 @@ public class Vector2f {
         return y;
     }
 
-    public void add(Vector2f v1) {
-        this.x += v1.x;
-        this.y += v1.y;
+    public Vector2f add(Vector2f v1) {
+        float x = this.x + v1.x;
+        float y = this.y + v1.y;
+
+        return new Vector2f(x, y);
     }
 
     public void sub(Vector2f v1, Vector2f v2) {
