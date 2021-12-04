@@ -1,8 +1,9 @@
 package com.vsu.cgcourse.obj_writer;
 
-import com.vsu.cgcourse.math.Vector2f;
-import com.vsu.cgcourse.math.Vector3f;
+import com.vsu.cgcourse.math.vectors.Vector2f;
+import com.vsu.cgcourse.math.vectors.Vector3f;
 import com.vsu.cgcourse.model.Mesh;
+import com.vsu.cgcourse.model.TransformMesh;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,12 +15,14 @@ public class ObjWriter {
 
     private static int lineInd = 0;
 
-    public static void write(List<Mesh> meshList, String fileName) {
+    public static void write(List<TransformMesh> meshList, String fileName) {
         Locale.setDefault(Locale.ROOT);
 
         try (FileWriter writer = new FileWriter(fileName + ".obj", false)) {
             int verticesCount = 0;
-            for (Mesh mesh : meshList) {
+            for (TransformMesh transformMesh : meshList) {
+                Mesh mesh = transformMesh.getMesh();
+
                 final ArrayList<Vector3f> vertices = mesh.vertices;
                 final ArrayList<Vector2f> textureVertices = mesh.textureVertices;
                 final ArrayList<Vector3f> normals = mesh.normals;

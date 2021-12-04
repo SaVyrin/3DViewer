@@ -1,10 +1,11 @@
 package com.vsu.cgcourse.fxml.controllers;
 
 import com.vsu.cgcourse.Simple3DViewer;
-import com.vsu.cgcourse.math.Matrix4f;
+import com.vsu.cgcourse.math.matrices.Matrix4f;
 import com.vsu.cgcourse.model.Mesh;
+import com.vsu.cgcourse.model.TransformMesh;
 import com.vsu.cgcourse.obj_writer.ObjWriter;
-import com.vsu.cgcourse.render_engine.CurrentTheme;
+import com.vsu.cgcourse.fxml.states.CurrentTheme;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ public class ModalController {
     @FXML
     private TextField fileName;
 
-    private final List<Mesh> activeMeshList = new ArrayList<>();
+    private final List<TransformMesh> activeMeshList = new ArrayList<>();
 
 
     public void setTheme(CurrentTheme currentTheme) {
@@ -38,16 +39,16 @@ public class ModalController {
         if (currentTheme == CurrentTheme.DARK_THEME) {
             css = Objects.requireNonNull(Simple3DViewer.class.getResource("css/dark_theme.css")).toExternalForm();
         }
-        if (currentTheme == CurrentTheme.LIGHT_THEME){
+        if (currentTheme == CurrentTheme.LIGHT_THEME) {
             css = Objects.requireNonNull(Simple3DViewer.class.getResource("css/light_theme.css")).toExternalForm();
         }
         anchorPane.getStylesheets().add(css);
     }
 
-    public void setMeshList(List<Mesh> meshList) {
+    public void setMeshList(List<TransformMesh> meshList) {
         int meshCounter = 1;
-        for (Mesh mesh : meshList) {
-            CheckBox checkBox = new CheckBox(meshCounter + ". " + mesh.name);
+        for (TransformMesh transformMesh : meshList) {
+            CheckBox checkBox = new CheckBox(meshCounter + ". " + transformMesh.getName());
 
             EventHandler<MouseEvent> checkBoxEventHandler = e -> {
                 String[] name = checkBox.getText().split("\\.");
@@ -83,18 +84,21 @@ public class ModalController {
 
         if (toggle.getText().equals("Сохранить изменения")) {
 
-            for (Mesh mesh : activeMeshList) {
-                Matrix4f matrix4f = new Matrix4f(mesh.rotateScaleTranslate);
+            for (TransformMesh transformMesh : activeMeshList) {
+                float[][] transformMatrix = transformMesh.getTransformationMatrix();
+                Mesh mesh = transformMesh.getMesh();
+
+                Matrix4f matrix4f = new Matrix4f(transformMatrix);
                 for (int i = 0; i < mesh.vertices.size(); i++) {
                     mesh.vertices.set(i, Matrix4f.multiplyMatrix4ByVector3(matrix4f, mesh.vertices.get(i)));
                 }
 
-                mesh.rotateScaleTranslate = new float[][]{
+                transformMesh.setTransformationMatrix(new float[][]{
                         {1, 0, 0, 0},
                         {0, 1, 0, 0},
                         {0, 0, 1, 0},
                         {0, 0, 0, 1}
-                };
+                });
             }
         }
 

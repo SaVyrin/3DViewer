@@ -1,4 +1,4 @@
-package com.vsu.cgcourse.render_engine;
+package com.vsu.cgcourse.fxml.states;
 
 public enum State {
     MOVE,

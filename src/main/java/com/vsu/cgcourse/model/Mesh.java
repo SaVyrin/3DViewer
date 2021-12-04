@@ -1,13 +1,11 @@
 package com.vsu.cgcourse.model;
 
-import com.vsu.cgcourse.math.Vector2f;
-import com.vsu.cgcourse.math.Vector3f;
+import com.vsu.cgcourse.math.vectors.Vector2f;
+import com.vsu.cgcourse.math.vectors.Vector3f;
 
 import java.util.ArrayList;
 
 public class Mesh {
-    public String name;
-
     public ArrayList<Vector3f> vertices = new ArrayList<>();
     public ArrayList<Vector2f> textureVertices = new ArrayList<>();
     public ArrayList<Vector3f> normals = new ArrayList<>();
@@ -15,13 +13,4 @@ public class Mesh {
     public ArrayList<ArrayList<Integer>> polygonVertexIndices = new ArrayList<>();
     public ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = new ArrayList<>();
     public ArrayList<ArrayList<Integer>> polygonNormalIndices = new ArrayList<>();
-
-    public Mesh() {}
-
-    public float[][] rotateScaleTranslate = new float[][]{
-            {1, 0, 0, 0},
-            {0, 1, 0, 0},
-            {0, 0, 1, 0},
-            {0, 0, 0, 1}
-    };
 }

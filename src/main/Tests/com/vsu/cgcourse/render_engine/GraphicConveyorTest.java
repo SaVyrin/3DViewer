@@ -1,9 +1,10 @@
 package com.vsu.cgcourse.render_engine;
 
-import com.vsu.cgcourse.math.Matrix4f;
-import com.vsu.cgcourse.math.Point2f;
-import com.vsu.cgcourse.math.Vector3f;
+import com.vsu.cgcourse.math.matrices.Matrix4f;
+import com.vsu.cgcourse.math.points.Point2f;
+import com.vsu.cgcourse.math.vectors.Vector3f;
 import com.vsu.cgcourse.model.Mesh;
+import com.vsu.cgcourse.model.TransformMesh;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,8 @@ class GraphicConveyorTest {
         Vector3f translate = new Vector3f(10, 10, 10);
 
         Mesh mesh = new Mesh();
-        float[][] actualFloat = GraphicConveyor.modelMatrix(scale, rotate, translate, mesh).getMatrix();
+        TransformMesh transformMesh = new TransformMesh("mesh", mesh);
+        float[][] actualFloat = GraphicConveyor.modelMatrix(scale, rotate, translate, transformMesh).getMatrix();
 
         float[][] expectedFloat = {
                 {1, 0, 0, 10},

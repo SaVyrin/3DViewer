@@ -1,4 +1,4 @@
-package com.vsu.cgcourse.math;
+package com.vsu.cgcourse.math.points;
 
 import java.util.Objects;
 
@@ -7,7 +7,7 @@ public class Point3f {
     private final float y;
     private final float z;
 
-    public Point3f(float x, float y, float z){
+    public Point3f(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;

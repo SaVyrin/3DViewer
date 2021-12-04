@@ -1,14 +1,14 @@
 package com.vsu.cgcourse.render_engine;
 
-import com.vsu.cgcourse.math.Matrix4f;
-import com.vsu.cgcourse.math.Point2f;
-import com.vsu.cgcourse.math.Vector3f;
-import com.vsu.cgcourse.model.Mesh;
+import com.vsu.cgcourse.math.matrices.Matrix4f;
+import com.vsu.cgcourse.math.points.Point2f;
+import com.vsu.cgcourse.math.vectors.Vector3f;
+import com.vsu.cgcourse.model.TransformMesh;
 
 public class GraphicConveyor {
 
-    public static Matrix4f modelMatrix(Vector3f scale, Vector3f rotate, Vector3f translate, Mesh mesh) {
-        Matrix4f rtsMatrix = new Matrix4f(mesh.rotateScaleTranslate);
+    public static Matrix4f modelMatrix(Vector3f scale, Vector3f rotate, Vector3f translate, TransformMesh transformMesh) {
+        Matrix4f rtsMatrix = new Matrix4f(transformMesh.getTransformationMatrix());
         scale(scale, rtsMatrix);
         rotate(rotate, rtsMatrix);
         rtsMatrix = translate(translate, rtsMatrix);

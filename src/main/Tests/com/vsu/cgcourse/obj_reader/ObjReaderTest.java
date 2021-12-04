@@ -1,6 +1,6 @@
 package com.vsu.cgcourse.obj_reader;
 
-import com.vsu.cgcourse.math.Vector3f;
+import com.vsu.cgcourse.math.vectors.Vector3f;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,9 @@
 package com.vsu.cgcourse.obj_writer;
 
-import com.vsu.cgcourse.math.Vector2f;
-import com.vsu.cgcourse.math.Vector3f;
+import com.vsu.cgcourse.math.vectors.Vector2f;
+import com.vsu.cgcourse.math.vectors.Vector3f;
 import com.vsu.cgcourse.model.Mesh;
+import com.vsu.cgcourse.model.TransformMesh;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +21,12 @@ public class ObjWriterTest {
 
         try {
             Mesh mesh = new Mesh();
+            TransformMesh transformMesh = new TransformMesh("mesh", mesh);
             ArrayList<Vector3f> vertices = new ArrayList<>();
             vertices.add(new Vector3f(1.34f, 0.56f, -1.2f));
             mesh.vertices = vertices;
-            List<Mesh> meshList = new ArrayList<>();
-            meshList.add(mesh);
+            List<TransformMesh> meshList = new ArrayList<>();
+            meshList.add(transformMesh);
             ObjWriter.write(meshList, "MyModel1");
 
             Path fileName = Path.of("MyModel1.obj");
@@ -43,11 +45,12 @@ public class ObjWriterTest {
 
         try {
             Mesh mesh = new Mesh();
+            TransformMesh transformMesh = new TransformMesh("mesh", mesh);
             ArrayList<Vector2f> vertices = new ArrayList<>();
             vertices.add(new Vector2f(1.34f, 0.56f));
             mesh.textureVertices = vertices;
-            List<Mesh> meshList = new ArrayList<>();
-            meshList.add(mesh);
+            List<TransformMesh> meshList = new ArrayList<>();
+            meshList.add(transformMesh);
             ObjWriter.write(meshList, "MyModel2");
 
             Path fileName = Path.of("MyModel2.obj");
@@ -67,11 +70,12 @@ public class ObjWriterTest {
 
         try {
             Mesh mesh = new Mesh();
+            TransformMesh transformMesh = new TransformMesh("mesh", mesh);
             ArrayList<Vector3f> vertices = new ArrayList<>();
             vertices.add(new Vector3f(1.34f, 0.56f, -1.2f));
             mesh.normals = vertices;
-            List<Mesh> meshList = new ArrayList<>();
-            meshList.add(mesh);
+            List<TransformMesh> meshList = new ArrayList<>();
+            meshList.add(transformMesh);
             ObjWriter.write(meshList, "MyModel3");
 
             Path fileName = Path.of("MyModel3.obj");
@@ -91,6 +95,7 @@ public class ObjWriterTest {
 
         try {
             Mesh mesh = new Mesh();
+            TransformMesh transformMesh = new TransformMesh("mesh", mesh);
             ArrayList<ArrayList<Integer>> polygonVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonNormalIndices = new ArrayList<>();
@@ -110,8 +115,8 @@ public class ObjWriterTest {
             mesh.polygonVertexIndices = polygonVertexIndices;
             mesh.polygonTextureVertexIndices = polygonTextureVertexIndices;
             mesh.polygonNormalIndices = polygonNormalIndices;
-            List<Mesh> meshList = new ArrayList<>();
-            meshList.add(mesh);
+            List<TransformMesh> meshList = new ArrayList<>();
+            meshList.add(transformMesh);
             ObjWriter.write(meshList, "MyModel4");
 
             Path fileName = Path.of("MyModel4.obj");
@@ -131,6 +136,7 @@ public class ObjWriterTest {
 
         try {
             Mesh mesh = new Mesh();
+            TransformMesh transformMesh = new TransformMesh("mesh", mesh);
             ArrayList<ArrayList<Integer>> polygonVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonNormalIndices = new ArrayList<>();
@@ -153,8 +159,8 @@ public class ObjWriterTest {
             mesh.polygonVertexIndices = polygonVertexIndices;
             mesh.polygonTextureVertexIndices = polygonTextureVertexIndices;
             mesh.polygonNormalIndices = polygonNormalIndices;
-            List<Mesh> meshList = new ArrayList<>();
-            meshList.add(mesh);
+            List<TransformMesh> meshList = new ArrayList<>();
+            meshList.add(transformMesh);
             ObjWriter.write(meshList, "MyModel5");
 
             Path fileName = Path.of("MyModel5.obj");
@@ -174,6 +180,7 @@ public class ObjWriterTest {
 
         try {
             Mesh mesh = new Mesh();
+            TransformMesh transformMesh = new TransformMesh("mesh", mesh);
             ArrayList<ArrayList<Integer>> polygonVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonNormalIndices = new ArrayList<>();
@@ -199,8 +206,8 @@ public class ObjWriterTest {
             mesh.polygonVertexIndices = polygonVertexIndices;
             mesh.polygonTextureVertexIndices = polygonTextureVertexIndices;
             mesh.polygonNormalIndices = polygonNormalIndices;
-            List<Mesh> meshList = new ArrayList<>();
-            meshList.add(mesh);
+            List<TransformMesh> meshList = new ArrayList<>();
+            meshList.add(transformMesh);
             ObjWriter.write(meshList, "MyModel6");
 
             Path fileName = Path.of("MyModel6.obj");
@@ -220,6 +227,7 @@ public class ObjWriterTest {
 
         try {
             Mesh mesh = new Mesh();
+            TransformMesh transformMesh = new TransformMesh("mesh", mesh);
             ArrayList<ArrayList<Integer>> polygonVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonNormalIndices = new ArrayList<>();
@@ -242,8 +250,8 @@ public class ObjWriterTest {
             mesh.polygonVertexIndices = polygonVertexIndices;
             mesh.polygonTextureVertexIndices = polygonTextureVertexIndices;
             mesh.polygonNormalIndices = polygonNormalIndices;
-            List<Mesh> meshList = new ArrayList<>();
-            meshList.add(mesh);
+            List<TransformMesh> meshList = new ArrayList<>();
+            meshList.add(transformMesh);
             ObjWriter.write(meshList, "MyModel7");
 
             Path fileName = Path.of("MyModel7.obj");
@@ -263,6 +271,7 @@ public class ObjWriterTest {
 
         try {
             Mesh mesh = new Mesh();
+            TransformMesh transformMesh = new TransformMesh("mesh", mesh);
             ArrayList<ArrayList<Integer>> polygonVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonTextureVertexIndices = new ArrayList<>();
             ArrayList<ArrayList<Integer>> polygonNormalIndices = new ArrayList<>();
@@ -283,8 +292,8 @@ public class ObjWriterTest {
             mesh.polygonVertexIndices = polygonVertexIndices;
             mesh.polygonTextureVertexIndices = polygonTextureVertexIndices;
             mesh.polygonNormalIndices = polygonNormalIndices;
-            List<Mesh> meshList = new ArrayList<>();
-            meshList.add(mesh);
+            List<TransformMesh> meshList = new ArrayList<>();
+            meshList.add(transformMesh);
             ObjWriter.write(meshList, "MyModel8");
 
         } catch (ObjWriterException ex) {

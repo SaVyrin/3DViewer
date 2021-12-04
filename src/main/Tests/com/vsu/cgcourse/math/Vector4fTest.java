@@ -1,5 +1,6 @@
 package com.vsu.cgcourse.math;
 
+import com.vsu.cgcourse.math.vectors.Vector4f;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

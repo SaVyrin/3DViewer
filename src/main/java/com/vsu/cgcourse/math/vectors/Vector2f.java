@@ -1,4 +1,4 @@
-package com.vsu.cgcourse.math;
+package com.vsu.cgcourse.math.vectors;
 
 import java.util.Objects;
 

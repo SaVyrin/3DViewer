@@ -1,8 +1,8 @@
 package com.vsu.cgcourse.render_engine;
 
 import com.vsu.cgcourse.Simple3DViewer;
-import com.vsu.cgcourse.math.Point3f;
-import com.vsu.cgcourse.math.Vector2f;
+import com.vsu.cgcourse.math.points.Point3f;
+import com.vsu.cgcourse.math.vectors.Vector2f;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
@@ -43,7 +43,7 @@ public class TempRasterization {
                 zBuffer[y1][x1] = z;
                 /*int col = getColor(x1, y1, p1, vx1, vx2);
                 writePixel(x1, y1, col, pixelWriter);*/
-                pixelWriter.setColor(x1, y1, Color.rgb(Math.min(lengthX, 255), Math.min(lengthY, 255), Math.min(length, 255)));
+                pixelWriter.setColor(x1, y1, Color.rgb(lengthX, lengthY, length));
             }
         }
 

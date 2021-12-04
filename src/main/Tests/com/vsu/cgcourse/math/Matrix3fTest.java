@@ -1,5 +1,8 @@
 package com.vsu.cgcourse.math;
 
+import com.vsu.cgcourse.math.matrices.Matrix3f;
+import com.vsu.cgcourse.math.matrices.MatrixSizeException;
+import com.vsu.cgcourse.math.vectors.Vector3f;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

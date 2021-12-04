@@ -1,10 +1,11 @@
 package com.vsu.cgcourse.render_engine;
 
-import com.vsu.cgcourse.math.Matrix4f;
-import com.vsu.cgcourse.math.Point2f;
-import com.vsu.cgcourse.math.Point3f;
-import com.vsu.cgcourse.math.Vector3f;
+import com.vsu.cgcourse.math.matrices.Matrix4f;
+import com.vsu.cgcourse.math.points.Point2f;
+import com.vsu.cgcourse.math.points.Point3f;
+import com.vsu.cgcourse.math.vectors.Vector3f;
 import com.vsu.cgcourse.model.Mesh;
+import com.vsu.cgcourse.model.TransformMesh;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 
@@ -18,10 +19,13 @@ public class RenderEngine {
     public static void render(
             final GraphicsContext graphicsContext,
             final Camera camera,
-            final Mesh mesh,
+            final TransformMesh transformMesh,
             final int width,
             final int height) {
-        Matrix4f modelMatrix = new Matrix4f(mesh.rotateScaleTranslate);
+        float[][] transformMatrix = transformMesh.getTransformationMatrix();
+        Mesh mesh = transformMesh.getMesh();
+
+        Matrix4f modelMatrix = new Matrix4f(transformMatrix);
         Matrix4f viewMatrix = camera.getViewMatrix();
         Matrix4f projectionMatrix = camera.getProjectionMatrix();
 
