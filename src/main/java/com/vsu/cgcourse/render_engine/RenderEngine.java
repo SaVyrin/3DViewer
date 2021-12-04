@@ -29,10 +29,6 @@ public class RenderEngine {
         modelViewProjectionMatrix.mul(viewMatrix);
         modelViewProjectionMatrix.mul(projectionMatrix);
 
-        //modelMatrix.trans();
-        viewMatrix.trans();
-        projectionMatrix.trans();
-
         PixelWriter pixelWriter = graphicsContext.getPixelWriter();
         TempRasterization.zBuffer = new float[900][1600];
         for (float[] ints : TempRasterization.zBuffer) {

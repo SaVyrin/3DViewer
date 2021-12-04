@@ -90,10 +90,10 @@ public class GraphicConveyor {
         resultZ.normalize();
 
         float[][] matrix = new float[][]{
-                {resultX.getX(), resultY.getX(), resultZ.getX(), 0},
-                {resultX.getY(), resultY.getY(), resultZ.getY(), 0},
-                {resultX.getZ(), resultY.getZ(), resultZ.getZ(), 0},
-                {-resultX.dot(eye), -resultY.dot(eye), -resultZ.dot(eye), 1}
+                {resultX.getX(), resultY.getX(), resultZ.getX(), -resultX.dot(eye)},
+                {resultX.getY(), resultY.getY(), resultZ.getY(), -resultY.dot(eye)},
+                {resultX.getZ(), resultY.getZ(), resultZ.getZ(), -resultZ.dot(eye)},
+                {0, 0, 0, 1}
         };
         return new Matrix4f(matrix);
     }
@@ -108,8 +108,8 @@ public class GraphicConveyor {
         result.setMatrixElem(0, 0, tangentMinusOnDegree / aspectRatio);
         result.setMatrixElem(1, 1, tangentMinusOnDegree);
         result.setMatrixElem(2, 2, (farPlane + nearPlane) / (farPlane - nearPlane));
-        result.setMatrixElem(2, 3, 1.0F);
-        result.setMatrixElem(3, 2, 2 * (nearPlane * farPlane) / (nearPlane - farPlane));
+        result.setMatrixElem(2, 3, 2 * (nearPlane * farPlane) / (nearPlane - farPlane));
+        result.setMatrixElem(3, 2, 1.0F);
         return result;
     }
 

@@ -100,10 +100,10 @@ class GraphicConveyorTest {
         Vector3f origin = new Vector3f(1, 1, 1);
         Vector3f target = new Vector3f(2, 2, 2);
         float[][] expectedArray = new float[][]{
-                {(float) (1 / Math.sqrt(2)), -(float) (1 / Math.sqrt(6)), (float) (1 / Math.sqrt(3)), 0f},
-                {0f, (float) (2 / Math.sqrt(6)), (float) (1 / Math.sqrt(3)), 0f},
-                {(float) (-1 / Math.sqrt(2)), (float) (-1 / Math.sqrt(6)), (float) (1 / Math.sqrt(3)), 0f},
-                {-0f, -0f, -(float) (3 / Math.sqrt(3)), 1f}
+                {(float) (1 / Math.sqrt(2)), -(float) (1 / Math.sqrt(6)), (float) (1 / Math.sqrt(3)), -0f},
+                {0f, (float) (2 / Math.sqrt(6)), (float) (1 / Math.sqrt(3)), -0f},
+                {(float) (-1 / Math.sqrt(2)), (float) (-1 / Math.sqrt(6)), (float) (1 / Math.sqrt(3)), -(float) (3 / Math.sqrt(3))},
+                {0f, 0f, 0f, 1f}
         };
         Matrix4f expected = new Matrix4f(expectedArray);
         Matrix4f actual = GraphicConveyor.lookAt(origin, target);
@@ -122,8 +122,8 @@ class GraphicConveyorTest {
         float[][] expectedArray = new float[][]{
                 {(float) (1f / Math.tan(45f)) / 0.5f, 0f, 0f, 0f},
                 {0f, (float) (1f / Math.tan(45f)), 0f, 0f},
-                {0f, 0f, 3f, 1f},
-                {0f, 0f, -20f, 0}
+                {0f, 0f, 3f, -20f},
+                {0f, 0f, 1f, 0}
         };
         Matrix4f expected = new Matrix4f(expectedArray);
         Matrix4f actual = GraphicConveyor.perspective(90f, 0.5f, 5f, 10f);
