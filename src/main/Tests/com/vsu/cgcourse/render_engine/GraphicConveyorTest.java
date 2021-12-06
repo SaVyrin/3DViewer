@@ -18,8 +18,7 @@ class GraphicConveyorTest {
         Vector3f translate = new Vector3f(10, 10, 10);
 
         Mesh mesh = new Mesh();
-        TransformMesh transformMesh = new TransformMesh("mesh", mesh);
-        float[][] actualFloat = GraphicConveyor.modelMatrix(scale, rotate, translate, transformMesh).getMatrix();
+        float[][] actualFloat = GraphicConveyor.modelMatrix(scale, rotate, translate).getMatrix();
 
         float[][] expectedFloat = {
                 {1, 0, 0, 10},

@@ -7,8 +7,8 @@ import com.vsu.cgcourse.model.TransformMesh;
 
 public class GraphicConveyor {
 
-    public static Matrix4f modelMatrix(Vector3f scale, Vector3f rotate, Vector3f translate, TransformMesh transformMesh) {
-        Matrix4f rtsMatrix = new Matrix4f(transformMesh.getTransformationMatrix());
+    public static Matrix4f modelMatrix(Vector3f scale, Vector3f rotate, Vector3f translate) {
+        Matrix4f rtsMatrix = new Matrix4f(false);
         scale(scale, rtsMatrix);
         rotate(rotate, rtsMatrix);
         rtsMatrix = translate(translate, rtsMatrix);

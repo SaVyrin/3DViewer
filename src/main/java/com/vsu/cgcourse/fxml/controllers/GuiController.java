@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -38,6 +39,27 @@ import java.util.List;
 import java.util.Objects;
 
 public class GuiController {
+    @FXML
+    private AnchorPane meshProperties;
+    @FXML
+    private TextField ScaleByX;
+    @FXML
+    private TextField ScaleByY;
+    @FXML
+    private TextField ScaleByZ;
+    @FXML
+    private TextField RotateByX;
+    @FXML
+    private TextField RotateByY;
+    @FXML
+    private TextField RotateByZ;
+    @FXML
+    private TextField TranslateByX;
+    @FXML
+    private TextField TranslateByY;
+    @FXML
+    private TextField TranslateByZ;
+
     @FXML
     private Label currentStateLabel;
     @FXML
@@ -65,6 +87,19 @@ public class GuiController {
 
             canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
             AppStates.camera.setAspectRatio((float) (width / height));
+
+            if (AppStates.meshToShowProperties != null){
+                meshProperties.setVisible(true);
+
+                TransformMesh transformMesh = AppStates.meshToShowProperties;
+                setMeshProperties(
+                        transformMesh.getScale(),
+                        transformMesh.getRotation(),
+                        transformMesh.getTranslation()
+                );
+            } else {
+                meshProperties.setVisible(false);
+            }
 
             List<TransformMesh> meshList = AppStates.meshList;
             Camera camera = AppStates.camera;
@@ -267,5 +302,17 @@ public class GuiController {
             anchorPane.getStylesheets().add(css);
             canvas.getGraphicsContext2D().setStroke(Color.BLACK);
         }
+    }
+
+    public void setMeshProperties(Vector3f scale, Vector3f rotate, Vector3f translate){
+        ScaleByX.setText(Float.toString(scale.getX()));
+        ScaleByY.setText(Float.toString(scale.getY()));
+        ScaleByZ.setText(Float.toString(scale.getZ()));
+        RotateByX.setText(Float.toString(rotate.getX()));
+        RotateByY.setText(Float.toString(rotate.getY()));
+        RotateByZ.setText(Float.toString(rotate.getZ()));
+        TranslateByX.setText(Float.toString(translate.getX()));
+        TranslateByY.setText(Float.toString(translate.getY()));
+        TranslateByZ.setText(Float.toString(translate.getZ()));
     }
 }

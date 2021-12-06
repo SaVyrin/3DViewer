@@ -19,14 +19,18 @@ public class TempRasterization {
 
     static {
         try {
-            BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(Simple3DViewer.class.getResource("textures/gradient.jpg")));
+            BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(
+                    Simple3DViewer.class.getResource("textures/gradient.jpg")));
             pixels = TempRasterization.convertTo2DUsingGetRGB(bufferedImage);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void drawLine(int x1, int y1, int x2, int y2, float z1, float z2, Point3f p1, Point3f p2, Point3f p3, PixelWriter pixelWriter) {
+    private static void drawLine(int x1, int y1, float z1,
+                                 int x2, int y2, float z2,
+                                 Point3f p1, Point3f p2, Point3f p3,
+                                 PixelWriter pixelWriter) {
         int dx = (x2 - x1 >= 0 ? 1 : -1);
         int dy = (y2 - y1 >= 0 ? 1 : -1);
 
@@ -118,7 +122,7 @@ public class TempRasterization {
 
             curZ1 = Math.max(MinZ, Math.min(MaxZ, curZ1 + invSlopeZ1));
             curZ2 = Math.min(MaxZ, Math.max(MinZ, curZ2 + invSlopeZ2));
-            drawLine((int) curX1, scanlineY, (int) curX2, scanlineY, curZ1, curZ2, p1, p2, p3, pixelWriter);
+            drawLine((int) curX1, scanlineY, curZ1, (int) curX2, scanlineY, curZ2, p1, p2, p3, pixelWriter);
         }
     }
 
@@ -147,7 +151,7 @@ public class TempRasterization {
 
             curZ1 = Math.max(MinZ, Math.min(MaxZ, curZ1 - invSlopeZ1));
             curZ2 = Math.min(MaxZ, Math.max(MinZ, curZ2 - invSlopeZ2));
-            drawLine((int) curx1, scanlineY, (int) curx2, scanlineY, curZ1, curZ2, p1, p2, p3, pixelWriter);
+            drawLine((int) curx1, scanlineY, curZ1, (int) curx2, scanlineY, curZ2, p1, p2, p3, pixelWriter);
         }
     }
 
@@ -173,14 +177,14 @@ public class TempRasterization {
         }
     }
 
-    private static int getColor(float x, float y, Point3f p1, Vector2f vx1, Vector2f vx2) {
+    private static int getColor(float x, float y, Point3f p1, Vector2f v1, Vector2f v2) {
         //Барицентрический координаты
         Vector2f vx3 = new Vector2f(x - p1.getX(), y - p1.getY());
 
-        float projectionV1 = vx1.dot(vx3) / vx1.dot(vx1);
-        float projectionV2 = vx2.dot(vx3) / vx2.dot(vx2);
+        float projectionV1 = v1.dot(vx3) / v1.dot(v1);
+        float projectionV2 = v2.dot(vx3) / v2.dot(v2);
 
-        Vector2f result = vx1.multi(projectionV1).add(vx2.multi(projectionV2));
+        Vector2f result = v1.multi(projectionV1).add(v2.multi(projectionV2));
         result = result.add(new Vector2f(p1.getX(), p1.getY()));
 
         int resX = (int) result.getX();

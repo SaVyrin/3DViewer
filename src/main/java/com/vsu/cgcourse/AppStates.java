@@ -12,8 +12,10 @@ import java.util.List;
 public abstract class AppStates {
     public static State currState = State.MOVE;
     public static CurrentTheme currentTheme;
-    final public static float TRANSLATION = 2F;
-    final public static float FPS = 1000f/30f;
+    public static TransformMesh meshToShowProperties;
+
+    public static final float TRANSLATION = 2F;
+    public static final float FPS = 1000f/30;
 
     public static final List<TransformMesh> meshList = new ArrayList<>();
     public static final List<TransformMesh> activeMeshList = new ArrayList<>();

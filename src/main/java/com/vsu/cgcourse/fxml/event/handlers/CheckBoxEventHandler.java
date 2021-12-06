@@ -20,9 +20,12 @@ public class CheckBoxEventHandler implements EventHandler<MouseEvent> {
         int index = Integer.parseInt(name[0]) - 1;
 
         if (checkBox.isSelected()) {
-            activeMeshList.add(meshList.get(index));
+            TransformMesh transformMesh = meshList.get(index);
+            AppStates.meshToShowProperties = transformMesh;
+            activeMeshList.add(transformMesh);
         }
         if (!checkBox.isSelected()) {
+            AppStates.meshToShowProperties = null;
             activeMeshList.remove(meshList.get(index));
         }
     }

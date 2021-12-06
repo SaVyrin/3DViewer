@@ -80,8 +80,19 @@ public class AnchorPaneEventHandler implements EventHandler<KeyEvent> {
     private void scaleRotateTranslate(Vector3f scale, Vector3f rotate, Vector3f translate) {
         List<TransformMesh> activeMeshList = AppStates.activeMeshList;
         for (TransformMesh transformMesh : activeMeshList) {
+
+            Vector3f addScale = new Vector3f(-1,-1,-1);
+            addScale.add(scale);
+            transformMesh.getScale().add(addScale);
+            transformMesh.getRotation().add(rotate);
+            transformMesh.getTranslation().add(translate);
+
             transformMesh.setTransformationMatrix(
-                    GraphicConveyor.modelMatrix(scale, rotate, translate, transformMesh).getMatrix()
+                    GraphicConveyor.modelMatrix(
+                            transformMesh.getScale(),
+                            transformMesh.getRotation(),
+                            transformMesh.getTranslation()
+                    ).getMatrix()
             );
         }
     }

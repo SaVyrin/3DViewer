@@ -4,6 +4,12 @@ import com.vsu.cgcourse.math.matrices.Matrix4f;
 import com.vsu.cgcourse.math.vectors.Vector3f;
 
 public class Camera {
+    private Vector3f position;
+    private Vector3f target;
+    private float fov;
+    private float aspectRatio;
+    private float nearPlane;
+    private float farPlane;
 
     public Camera(
             final Vector3f position,
@@ -55,11 +61,4 @@ public class Camera {
     Matrix4f getProjectionMatrix() {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
-
-    private Vector3f position;
-    private Vector3f target;
-    private float fov;
-    private float aspectRatio;
-    private float nearPlane;
-    private float farPlane;
 }
