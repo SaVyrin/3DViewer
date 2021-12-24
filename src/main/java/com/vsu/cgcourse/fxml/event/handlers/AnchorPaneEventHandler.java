@@ -45,7 +45,7 @@ public class AnchorPaneEventHandler implements EventHandler<KeyEvent> {
             if (AppStates.currState != State.SCALE) {
                 return new Vector3f(-AppStates.TRANSLATION, 0, 0);
             }
-            return new Vector3f(1 / AppStates.TRANSLATION, 1, 1);
+            return new Vector3f(0, 1, 1);
         }
         if (evt.getCode() == KeyCode.NUMPAD4) {
             if (AppStates.currState != State.SCALE) {
@@ -57,7 +57,7 @@ public class AnchorPaneEventHandler implements EventHandler<KeyEvent> {
             if (AppStates.currState != State.SCALE) {
                 return new Vector3f(0, -AppStates.TRANSLATION, 0);
             }
-            return new Vector3f(1, 1 / AppStates.TRANSLATION, 1);
+            return new Vector3f(1, 0, 1);
         }
         if (evt.getCode() == KeyCode.W) {
             if (AppStates.currState != State.SCALE) {
@@ -69,7 +69,7 @@ public class AnchorPaneEventHandler implements EventHandler<KeyEvent> {
             if (AppStates.currState != State.SCALE) {
                 return new Vector3f(0, 0, -AppStates.TRANSLATION);
             }
-            return new Vector3f(1, 1, 1 / AppStates.TRANSLATION);
+            return new Vector3f(1, 1, 0);
         }
         if (AppStates.currState != State.SCALE) {
             return new Vector3f(0, 0, 0);

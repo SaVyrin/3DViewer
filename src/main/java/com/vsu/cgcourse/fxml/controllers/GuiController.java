@@ -7,6 +7,7 @@ import com.vsu.cgcourse.fxml.event.handlers.CheckBoxEventHandler;
 import com.vsu.cgcourse.fxml.states.CurrentTheme;
 import com.vsu.cgcourse.fxml.states.State;
 import com.vsu.cgcourse.math.vectors.Vector3f;
+import com.vsu.cgcourse.model.MeshNormalize;
 import com.vsu.cgcourse.model.TransformMesh;
 import com.vsu.cgcourse.obj_reader.ObjReader;
 import com.vsu.cgcourse.render_engine.Camera;
@@ -136,6 +137,7 @@ public class GuiController {
         }
 
         TransformMesh transformMesh = ObjReader.read(fileContent, file.getName());
+        MeshNormalize.addNormals(transformMesh.getMesh());
         List<TransformMesh> meshList = AppStates.meshList;
         meshList.add(transformMesh);
 

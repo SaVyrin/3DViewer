@@ -2,6 +2,10 @@
     -fx-background-color: #fff;
 }
 
+#meshProperties .label {
+-fx-text-fill: #000;
+}
+
 .check-box {
     -fx-text-fill: #000;
 }
@@ -16,6 +20,11 @@
 }
 
 #meshCheckBoxes {
+    -fx-background-color: #fff;
+    -fx-border-color: #000;
+}
+
+#meshProperties {
     -fx-background-color: #fff;
     -fx-border-color: #000;
 }
