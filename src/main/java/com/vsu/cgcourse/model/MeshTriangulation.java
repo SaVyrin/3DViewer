@@ -13,46 +13,46 @@ public class MeshTriangulation {
 
     }
 
-    private static ArrayList<ArrayList<Integer>> triangulationVertexIndices(ArrayList<ArrayList<Integer>> polygonVertexIndices){
+    private static ArrayList<ArrayList<Integer>> triangulationVertexIndices(ArrayList<ArrayList<Integer>> polygonVertexIndices) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-        for (ArrayList<Integer> value: polygonVertexIndices){
+        for (ArrayList<Integer> value : polygonVertexIndices) {
             int n = value.size() - 3;
-            if (n > 0) {
-                for (int i = 0; i <= n; i++) {
-                    list.add(new ArrayList<>(Arrays.asList(value.get(0),
-                            value.get(1 + i), value.get(2 + i))));
-                }
+
+            for (int i = 0; i <= n; i++) {
+                list.add(new ArrayList<>(Arrays.asList(value.get(0),
+                        value.get(1 + i), value.get(2 + i))));
             }
+
         }
 
         return list;
     }
 
-    private static ArrayList<ArrayList<Integer>> triangulationNormal(ArrayList<ArrayList<Integer>> polygonNormalIndices){
+    private static ArrayList<ArrayList<Integer>> triangulationNormal(ArrayList<ArrayList<Integer>> polygonNormalIndices) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-        for (ArrayList<Integer> value: polygonNormalIndices){
+        for (ArrayList<Integer> value : polygonNormalIndices) {
             int n = value.size() - 3;
-            if (n > 0) {
-                for (int i = 0; i <= n; i++) {
-                    list.add(new ArrayList<>(Arrays.asList(value.get(0),
-                            value.get(1 + i), value.get(2 + i))));
-                }
+
+            for (int i = 0; i <= n; i++) {
+                list.add(new ArrayList<>(Arrays.asList(value.get(0),
+                        value.get(1 + i), value.get(2 + i))));
             }
+
         }
 
         return list;
     }
 
-    private static ArrayList<ArrayList<Integer>> triangulationTexture(ArrayList<ArrayList<Integer>> polygonTextureVertexIndices){
+    private static ArrayList<ArrayList<Integer>> triangulationTexture(ArrayList<ArrayList<Integer>> polygonTextureVertexIndices) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-        for (ArrayList<Integer> value: polygonTextureVertexIndices){
+        for (ArrayList<Integer> value : polygonTextureVertexIndices) {
             int n = value.size() - 3;
-            if (n > 0) {
-                for (int i = 0; i <= n; i++) {
-                    list.add(new ArrayList<>(Arrays.asList(value.get(0),
-                            value.get(1 + i), value.get(2 + i))));
-                }
+
+            for (int i = 0; i <= n; i++) {
+                list.add(new ArrayList<>(Arrays.asList(value.get(0),
+                        value.get(1 + i), value.get(2 + i))));
             }
+
         }
 
         return list;

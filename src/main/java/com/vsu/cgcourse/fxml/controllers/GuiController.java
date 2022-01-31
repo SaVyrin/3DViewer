@@ -138,8 +138,8 @@ public class GuiController {
         }
 
         TransformMesh transformMesh = ObjReader.read(fileContent, file.getName());
-        MeshNormalize.addNormals(transformMesh.getMesh());
         MeshTriangulation.triangulation(transformMesh.getMesh());
+        MeshNormalize.addNormals(transformMesh.getMesh());
         List<TransformMesh> meshList = AppStates.meshList;
         meshList.add(transformMesh);
 
